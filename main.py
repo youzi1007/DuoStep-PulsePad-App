@@ -32,7 +32,7 @@ class DuoStepApp(QMainWindow, Ui_MainWindow):
         time.sleep(2)  # Wait for Arduino to initialize
 
         # Set up directories for samples
-        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) if '__file__' in globals() else os.getcwd()
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__)) if '__file__' in globals() else os.getcwd()
         SAMPLES_DIR = os.path.join(BASE_DIR, "Resources", "piano", "samples24bit")
 
         # Initialize NotePlayback
