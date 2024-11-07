@@ -29,6 +29,8 @@ DuoStep: PulsePad is a user-friendly, Arduino-integrated musical app that’s al
 2. **Set Up the Python Environment**
      - It is recommended to use a virtual environment to manage dependencies.
      - Please use Anaconda3 to create virtual environment, or else pyo won't install
+       - Windows: Run these installation code through Conda Command Prompt
+       - MacOS/Linux: Run in terminal
      ```bash
      conda create -n myenv python=3.10
      conda activate DuoStepEnv
@@ -37,6 +39,8 @@ DuoStep: PulsePad is a user-friendly, Arduino-integrated musical app that’s al
      ```bash
      conda deactivate
 3. **Install Required Libraries**
+   - Windows: Run these installation code through Conda Command Prompt
+   - MacOS/Linux: Run in terminal
    - **PySide6**: For the GUI (graphical user interface)
      ```bash
      pip install PySide6
@@ -49,7 +53,7 @@ DuoStep: PulsePad is a user-friendly, Arduino-integrated musical app that’s al
      ```bash
      pip install pyserial
      ```
-4. **Arduino Setup**
+5. **Arduino Setup**
    - Connect your force-sensitive resistors (FSRs) to the Arduino and ensure it is set to communicate over the correct COM port (update the code if needed).
 
 ## Usage Instructions
