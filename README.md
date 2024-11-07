@@ -22,20 +22,20 @@ DuoStep: PulsePad is a user-friendly, Arduino-integrated musical app that’s al
 
 ## Installation and Setup
 1. **Clone the Repository**
-   ```bash
-   git clone <https://github.com/youzi1007/DuoStep-PulsePad-App>
-   cd yourPath/DuoStep-PulsePad-App-main
-   ```
+     ```bash
+     git clone <https://github.com/youzi1007/DuoStep-PulsePad-App>
+     cd yourPath/DuoStep-PulsePad-App-main
+     ```
 2. **Set Up the Python Environment**
-   - It is recommended to use a virtual environment to manage dependencies.
-   - Please use Anaconda3 to create virtual environment, or else pyo won't install
-   ```bash
-   conda create -n myenv python=3.10
-   conda activate DuoStepEnv
-   ```
-   - If need to deactivate the env
-   ```bash
-   conda deactivate
+     - It is recommended to use a virtual environment to manage dependencies.
+     - Please use Anaconda3 to create virtual environment, or else pyo won't install
+     ```bash
+     conda create -n myenv python=3.10
+     conda activate DuoStepEnv
+     ```
+     - If need to deactivate the env
+     ```bash
+     conda deactivate
 3. **Install Required Libraries**
    - **PySide6**: For the GUI (graphical user interface)
      ```bash
