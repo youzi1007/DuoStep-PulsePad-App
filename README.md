@@ -1,5 +1,5 @@
 # DuoStep: PulsePad App
-
+##DOES NOT WORK ON MAC YET, FUNCTIONALITY ON LINUX IS ACTIVELY BEING TESTED
 DuoStep: PulsePad is a user-friendly, Arduino-integrated musical app that’s all about giving music lovers and developers an expressive, customizable experience. Built with PySide6 and Qt for a slick and intuitive interface, the app offers detailed control over sound playback, sound libraries, and instrument configurations, with real-time sensor feedback and solid error handling.
 ## Features at a Glance
 
