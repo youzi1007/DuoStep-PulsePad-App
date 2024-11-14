@@ -275,7 +275,8 @@ class NotePlayback:
 
         # B3 (using C sample, pitch-shifted down)
         59: {
-            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"C4v{i + 1}.wav"), "speed": self.calculate_speed(-1)}
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"C4v{i + 1}.wav"), 
+                                 "speed": self.calculate_speed(-1)}
             for i in range(16)
         },
 
@@ -287,13 +288,15 @@ class NotePlayback:
 
         # C#4 (using C sample, pitch-shifted up)
         61: {
-            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"C4v{i + 1}.wav"), "speed": self.calculate_speed(1)}
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"C4v{i + 1}.wav"), 
+                                 "speed": self.calculate_speed(1)}
             for i in range(16)
         },
-        
+
         # D4 (using D# sample, pitch-shifted down)
         62: {
-            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"D#4v{i + 1}.wav"), "speed": self.calculate_speed(-1)}
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"D#4v{i + 1}.wav"), 
+                                 "speed": self.calculate_speed(-1)}
             for i in range(16)
         },
 
