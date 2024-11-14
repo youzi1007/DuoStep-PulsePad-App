@@ -290,16 +290,316 @@ class NotePlayback:
             velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"C4v{i + 1}.wav"), "speed": self.calculate_speed(1)}
             for i in range(16)
         },
-
+        
         # D4 (using D# sample, pitch-shifted down)
-         62: {
+        62: {
             velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"D#4v{i + 1}.wav"), "speed": self.calculate_speed(-1)}
             for i in range(16)
         },
 
-            # D#4 (using D# sample, no pitch shift)
+        # D#4 (using D# sample, no pitch shift)
         63: {
             velocity_ranges[i]: os.path.join(self.samples_dir, f"D#4v{i + 1}.wav")
+            for i in range(16)
+        },
+        
+        # E4 (using D# sample, pitch-shifted up)
+        64: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"D#4v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # F4 (using F# sample, pitch-shifted down)
+        65: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"F#4v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(-1)}
+            for i in range(16)
+        },
+
+        # F#4 (using F# sample, no pitch shift)
+        66: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"F#4v{i + 1}.wav")
+            for i in range(16)
+        },
+
+        # G4 (using F# sample, pitch-shifted up)
+        67: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"F#4v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # G#4 (using F# sample, pitch-shifted up)
+        68: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"F#4v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(2)}
+            for i in range(16)
+        },
+
+        # A4 (using A sample, no pitch shift)
+        69: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"A4v{i + 1}.wav")
+            for i in range(16)
+        },
+
+        # A#4 (using A sample, pitch-shifted up)
+        70: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"A4v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # B4 (using C sample, pitch-shifted down)
+        71: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"C5v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(-1)}
+            for i in range(16)
+        },
+
+        # C5 (using C sample, no pitch shift)
+        72: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"C5v{i + 1}.wav")
+            for i in range(16)
+        },
+
+        # C#5 (using C sample, pitch-shifted up)
+        73: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"C5v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # D5 (using D# sample, pitch-shifted down)
+        74: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"D#5v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(-1)}
+            for i in range(16)
+        },
+
+        # D#5 (using D# sample, no pitch shift)
+        75: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"D#5v{i + 1}.wav")
+            for i in range(16)
+        },
+
+        # E5 (using D# sample, pitch-shifted up)
+        76: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"D#5v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # F5 (using F# sample, pitch-shifted down)
+        77: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"F#5v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(-1)}
+            for i in range(16)
+        },
+
+        # F#5 (using F# sample, no pitch shift)
+        78: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"F#5v{i + 1}.wav")
+            for i in range(16)
+        },
+
+        # G5 (using F# sample, pitch-shifted up)
+        79: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"F#5v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # G#5 (using F# sample, pitch-shifted up)
+        80: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"F#5v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(2)}
+            for i in range(16)
+        },
+
+        # A5 (using A sample, no pitch shift)
+        81: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"A5v{i + 1}.wav")
+            for i in range(16)
+        },
+
+        # A#5 (using A sample, pitch-shifted up)
+        82: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"A5v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # B5 (using C sample, pitch-shifted down)
+        83: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"C6v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(-1)}
+            for i in range(16)
+        },
+
+        # C6 (using C sample, no pitch shift)
+        84: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"C6v{i + 1}.wav")
+            for i in range(16)
+        },
+
+        # C#6 (using C sample, pitch-shifted up)
+        85: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"C6v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # D6 (using D# sample, pitch-shifted down)
+        86: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"D#6v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(-1)}
+            for i in range(16)
+        },
+
+        # D#6 (using D# sample, no pitch shift)
+        87: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"D#6v{i + 1}.wav")
+            for i in range(16)
+        },
+
+        # E6 (using D# sample, pitch-shifted up)
+        88: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"D#6v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # F6 (using F# sample, pitch-shifted down)
+        89: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"F#6v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(-1)}
+            for i in range(16)
+        },
+
+        # F#6 (using F# sample, no pitch shift)
+        90: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"F#6v{i + 1}.wav")
+            for i in range(16)
+        },
+
+        # G6 (using F# sample, pitch-shifted up)
+        91: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"F#6v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # G#6 (using F# sample, pitch-shifted up)
+        92: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"F#6v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(2)}
+            for i in range(16)
+        },
+
+        # A6 (using A sample, no pitch shift)
+        93: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"A6v{i + 1}.wav")
+            for i in range(16)
+        },
+
+        # A#6 (using A sample, pitch-shifted up)
+        94: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"A6v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # B6 (using C sample, pitch-shifted down)
+        95: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"C7v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(-1)}
+            for i in range(16)
+        },
+
+        # C7 (using C sample, no pitch shift)
+        96: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"C7v{i + 1}.wav")
+            for i in range(16)
+        },
+
+        # C#7 (using C sample, pitch-shifted up)
+        97: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"C7v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # D7 (using D# sample, pitch-shifted down)
+        98: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"D#7v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(-1)}
+            for i in range(16)
+        },
+
+        # D#7 (using D# sample, no pitch shift)
+        99: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"D#7v{i + 1}.wav")
+            for i in range(16)
+        },
+
+        # E7 (using D# sample, pitch-shifted up)
+        100: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"D#7v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # F7 (using F# sample, pitch-shifted down)
+        101: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"F#7v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(-1)}
+            for i in range(16)
+        },
+
+        # F#7 (using F# sample, no pitch shift)
+        102: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"F#7v{i + 1}.wav")
+            for i in range(16)
+        },
+
+        # G7 (using F# sample, pitch-shifted up)
+        103: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"F#7v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # G#7 (using F# sample, pitch-shifted up)
+        104: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"F#7v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(2)}
+            for i in range(16)
+        },
+
+        # A7 (using A sample, no pitch shift)
+        105: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"A7v{i + 1}.wav")
+            for i in range(16)
+        },
+
+        # A#7 (using A sample, pitch-shifted up)
+        106: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"A7v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(1)}
+            for i in range(16)
+        },
+
+        # B7 (using C sample, pitch-shifted down)
+        107: {
+            velocity_ranges[i]: {"sample": os.path.join(self.samples_dir, f"C8v{i + 1}.wav"),
+                                 "speed": self.calculate_speed(-1)}
+            for i in range(16)
+        },
+
+        # C8 (using C sample, no pitch shift)
+        108: {
+            velocity_ranges[i]: os.path.join(self.samples_dir, f"C8v{i + 1}.wav")
             for i in range(16)
         }
     }
