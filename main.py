@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow, QScrollArea, QWidget, QFileDialog
 from PySide6.QtCore import Slot, QTimer
 from pyo import Server
 import serial
@@ -23,20 +23,23 @@ class DuoStepApp(QMainWindow, Ui_MainWindow):
         # UI elements to methods
         self.masterVol.valueChanged.connect(self.update_master_volume)
         self.pianoVol.valueChanged.connect(self.update_piano_volume)
-        self.clarinetVol.valueChanged.connect(self.update_clarinet_volume)
+        self.clarinetVol.valueChanged.connect(self.update_trumpet_volume)
         self.recordButton.clicked.connect(self.start_recording)
         self.stopButton.clicked.connect(self.stop_recording)
 
         # Arduino
-        self.arduino = serial.Serial('COM4', 9600)
+        self.arduino1 = serial.Serial('COM4', 9600)
+        self.arduino2 = serial.Serial('COM5', 9600)
         time.sleep(2)  # Wait for Arduino to initialize
 
         # Set up directories for samples
         BASE_DIR = os.path.dirname(os.path.abspath(__file__)) if '__file__' in globals() else os.getcwd()
         SAMPLES_DIR = os.path.join(BASE_DIR, "Resources", "piano", "samples24bit")
+        TRUMPET_DIR = os.path.join(BASE_DIR, "Resources", "trumpet-solo")
 
         # Initialize NotePlayback
-        self.note_playback = NotePlayback(SAMPLES_DIR)
+        self.note_playback = NotePlayback(SAMPLES_DIR,TRUMPET_DIR)
+
 
         # Setup timer for Arduino input handling
         self.timer = QTimer()
@@ -52,53 +55,300 @@ class DuoStepApp(QMainWindow, Ui_MainWindow):
         self.startingOct.currentIndexChanged.connect(self.update_note_assignment)
         self.midi_values=[]
 
-        # Initialize NotePlayback
-        self.note_playback = NotePlayback(SAMPLES_DIR)
-
-
 
         # Connect all checkboxes to the toggle method
         self.checkboxes = [
-            self.L1u, self.L1d, self.L2u, self.L2d, self.L3u, self.L3d, self.L4u, self.L4d, self.L5u, self.L5d,
-            self.R1u, self.R1d, self.R2u, self.R2d, self.R3u, self.R3d, self.R4u, self.R4d, self.R5u, self.R5d
+            self.L5d, self.L5u, self.L4d, self.L4u, self.L3d, self.L3u, self.L2d, self.L2u, self.L1d, self.L1u,
+            self.R1d, self.R1u, self.R2d, self.R2u, self.R3d, self.R3u, self.R4d, self.R4u, self.R5d, self.R5u
         ]
+        # Initialize mappings for checkboxes
+        self.master_to_piano = {
+            self.L1u: self.L1u_2, self.L1d: self.L1d_2,
+            self.L2u: self.L2u_2, self.L2d: self.L2d_2,
+            self.L3u: self.L3u_2, self.L3d: self.L3d_2,
+            self.L4u: self.L4u_2, self.L4d: self.L4d_2,
+            self.L5u: self.L5u_2, self.L5d: self.L5d_2,
+            self.R1u: self.R1u_2, self.R1d: self.R1d_2,
+            self.R2u: self.R2u_2, self.R2d: self.R2d_2,
+            self.R3u: self.R3u_2, self.R3d: self.R3d_2,
+            self.R4u: self.R4u_2, self.R4d: self.R4d_2,
+            self.R5u: self.R5u_2, self.R5d: self.R5d_2,
+        }
+
+        self.master_to_trumpet = {
+            self.L1u: self.L1u_3, self.L1d: self.L1d_3,
+            self.L2u: self.L2u_3, self.L2d: self.L2d_3,
+            self.L3u: self.L3u_3, self.L3d: self.L3d_3,
+            self.L4u: self.L4u_3, self.L4d: self.L4d_3,
+            self.L5u: self.L5u_3, self.L5d: self.L5d_3,
+            self.R1u: self.R1u_3, self.R1d: self.R1d_3,
+            self.R2u: self.R2u_3, self.R2d: self.R2d_3,
+            self.R3u: self.R3u_3, self.R3d: self.R3d_3,
+            self.R4u: self.R4u_3, self.R4d: self.R4d_3,
+            self.R5u: self.R5u_3, self.R5d: self.R5d_3,
+        }
+
+        self.master_to_upload = {
+            self.L5u: self.L5u_5, self.L5d: self.L5d_5,
+            self.L4u: self.L4u_5, self.L4d: self.L4d_5,
+            self.L3u: self.L3u_5, self.L3d: self.L3d_5,
+            self.L2u: self.L2u_5, self.L2d: self.L2d_5,
+            self.L1u: self.L1u_5, self.L1d: self.L1d_5,
+            self.R1u: self.R1u_5, self.R1d: self.R1d_5,
+            self.R2u: self.R2u_5, self.R2d: self.R2d_5,
+            self.R3u: self.R3u_5, self.R3d: self.R3d_5,
+            self.R4u: self.R4u_5, self.R4d: self.R4d_5,
+            self.R5u: self.R5u_5, self.R5d: self.R5d_5,
+        }
+
+        # Call the setup_checkboxes method
         self.setup_checkboxes()
 
+        # Initialize file tracking for upload buttons
+        self.uploaded_files = {}
+
+        # Map buttons and labels
+        self.upload_buttons_labels = {
+            # Left side
+            self.uploadButtonL: self.upload_label_L_1,
+            self.uploadButtonL_2: self.upload_label_L_2,
+            self.uploadButtonL_3: self.upload_label_L_3,
+            self.uploadButtonL_4: self.upload_label_L_4,
+            self.uploadButtonL_5: self.upload_label_L_5,
+            self.uploadButtonL_6: self.upload_label_L_6,
+            self.uploadButtonL_7: self.upload_label_L_7,
+            self.uploadButtonL_8: self.upload_label_L_8,
+            self.uploadButtonL_9: self.upload_label_L_9,
+            self.uploadButtonL_10: self.upload_label_L_10,
+
+            # Right side
+            self.uploadButtonR_1: self.upload_label_R_1,
+            self.uploadButtonR_2: self.upload_label_R_2,
+            self.uploadButtonR_3: self.upload_label_R_3,
+            self.uploadButtonR_4: self.upload_label_R_4,
+            self.uploadButtonR_5: self.upload_label_R_5,
+            self.uploadButtonR_6: self.upload_label_R_6,
+            self.uploadButtonR_7: self.upload_label_R_7,
+            self.uploadButtonR_8: self.upload_label_R_8,
+            self.uploadButtonR_9: self.upload_label_R_9,
+            self.uploadButtonR_10: self.upload_label_R_10,
+        }
+
+        # Connect all upload buttons to the same handler
+        for button in self.upload_buttons_labels.keys():
+            button.clicked.connect(lambda checked, btn=button: self.handle_upload_remove(btn))
+
+    def resolve_upload_button(self, master_checkbox):
+        # same order as master_to_upload
+        upload_widgets = list(self.master_to_upload.values())
+        # same order as upload_buttons_labels
+        upload_buttons = list(self.upload_buttons_labels.keys())
+
+        # check if master checkbox is valid
+        upload_widget = self.master_to_upload.get(master_checkbox)
+        if upload_widget:
+            # Find the index of the resolved widget in `upload_widgets`
+            widget_index = upload_widgets.index(upload_widget)
+            # Use the same index to find the corresponding button
+            if 0 <= widget_index < len(upload_buttons):
+                resolved_button = upload_buttons[widget_index]
+                #print(f"Resolved button: {resolved_button.objectName()} for checkbox: {master_checkbox.objectName()}")
+                return resolved_button
+        print(f"No upload button resolved for checkbox: {master_checkbox.objectName()}")
+        return None
+
+    @Slot()
+    def handle_upload_remove(self, button):
+        # Find corresponding label
+        label = self.upload_buttons_labels[button]
+
+        if button.text() == "upload":
+            # Open file dialog
+            file_path, _ = QFileDialog.getOpenFileName(self, "Upload Sound File", "", "Audio Files (*.wav *.mp3)")
+            if file_path:
+                self.uploaded_files[button.objectName()] = file_path  # Track uploaded file
+                button.setText("remove")  # Change button text
+                label.setText(f"File: {os.path.basename(file_path)}")  # Update label
+                print(f"Uploaded: {file_path}")  # Debug log
+                #print(f"Uploaded files mapping: {self.uploaded_files}")
+
+            else:
+                print("No file selected.")
+        else:
+            # Remove uploaded file
+            if button.objectName() in self.uploaded_files:
+                del self.uploaded_files[button.objectName()]
+            button.setText("upload")  # Reset button text
+            label.setText("No File Uploaded")  # Reset label
+            print("File removed.")  # Debug log
+
     def handle_arduino_input(self):
-        if self.arduino.in_waiting > 0:
-            data = self.arduino.readline().decode().strip()
-            print(f"Received from Arduino: {data}")
-            try:
-                fsr_number, velocity, action = map(int, data.split(','))
+        selected_library = self.masterLibraryComboBox.currentText()
+        for arduino in [self.arduino1, self.arduino2]:
+            if arduino.in_waiting > 0:
+                data = arduino.readline().decode().strip()
+                print(f"Received from Arduino: {data}")
+                try:
+                    fsr_number, velocity, action = map(int, data.split(','))
 
-                # Validate FSR number and map it to the corresponding MIDI note
-                if 1 <= fsr_number <= 20:
-                    note_index = fsr_number - 1  # FSRs are 1-indexed, so subtract 1 for 0-indexed list
+                    # Validate FSR number and map it to the corresponding MIDI note
+                    if 1 <= fsr_number <= 20:
+                        note_index = fsr_number - 1  # FSRs are 1-indexed, so subtract 1 for 0-indexed list
 
-                    if note_index < len(self.midi_values):
-                        note = self.midi_values[note_index]
+                        if note_index < len(self.midi_values):
+                            note = self.midi_values[note_index]
 
-                        # Check if the corresponding checkbox is checked (enabled)
-                        if self.checkboxes[note_index].isChecked():
-                            if action == 1:  # Start note
-                                self.note_playback.start_note_playback(note, velocity)
-                            elif action == 0:  # Stop note
-                                self.note_playback.stop_note_playback(note)
+                            # Check if the corresponding checkbox is checked (enabled)
+                            if self.checkboxes[note_index].isChecked() and selected_library == "Piano":
+                                if action == 1:  # Start note
+                                    self.note_playback.start_piano_note_playback(note, velocity)
+                                elif action == 0:  # Stop note
+                                    self.note_playback.stop_piano_note_playback(note)
+                            elif self.checkboxes[note_index].isChecked() and selected_library == "Trumpet":
+                                if action == 1:  # Start note
+                                    self.note_playback.start_trumpet_note_playback(note, velocity)
+                                elif action == 0:  # Stop note
+                                    self.note_playback.stop_trumpet_note_playback(note)
+                            elif self.checkboxes[note_index].isChecked() and selected_library == "Custom":
+                                if action == 1:  # Start note
+                                    if self.master_to_piano[self.checkboxes[note_index]].isChecked():
+                                        self.note_playback.start_piano_note_playback(note, velocity)
+                                    elif self.master_to_trumpet[self.checkboxes[note_index]].isChecked():
+                                        self.note_playback.start_trumpet_note_playback(note, velocity)
+                                    elif self.master_to_upload[self.checkboxes[note_index]].isChecked():
+                                        #print("Yay!")
+                                        upload_button = self.resolve_upload_button(self.checkboxes[note_index])
+                                        if upload_button:
+                                            file_path = self.uploaded_files.get(upload_button.objectName())
+                                            #print(f"Resolved upload button: {upload_button.objectName()}, File Path: {file_path}")
+                                            if not file_path:
+                                                print(f"Uploaded files (debug): {self.uploaded_files}")  # Log the full dictionary for debugging
+                                            if file_path:
+                                                self.note_playback.start_uploaded_note_playback(file_path)
+                                elif action == 0:  # Stop note
+                                    if self.master_to_piano[self.checkboxes[note_index]].isChecked():
+                                        self.note_playback.stop_piano_note_playback(note)
+                                    elif self.master_to_trumpet[self.checkboxes[note_index]].isChecked():
+                                        self.note_playback.stop_trumpet_note_playback(note)
+                                    elif self.master_to_upload[self.checkboxes[note_index]].isChecked():
+                                        upload_button = self.resolve_upload_button(self.checkboxes[note_index])
+                                        if upload_button:
+                                            file_path = self.uploaded_files.get(upload_button.objectName())
+                                            #print(f"Resolved upload button: {upload_button.objectName()}, File Path: {file_path}")
+                                            if not file_path:
+                                                print(f"Uploaded files (debug): {self.uploaded_files}")  # Log the full dictionary for debugging
+                                            if file_path:
+                                                self.note_playback.stop_uploaded_note_playback(file_path)
+                                        else:
+                                            print(
+                                                f"No upload button resolved for checkbox: {self.checkboxes[note_index].objectName()}")
+
+
+                            else:
+                                print(f"Note {note} is disabled and will not produce sound.")
+                                # self.textBrowser.append(f"Note {note} is disabled and will not produce sound.")
+
                         else:
-                            print(f"Note {note} is disabled and will not produce sound.")
+                            print(f"FSR number {fsr_number} is out of range for the current MIDI values.")
                     else:
-                        print(f"FSR number {fsr_number} is out of range for the current MIDI values.")
-                else:
-                    print(f"Invalid FSR number: {fsr_number}")
-            except ValueError:
-                print("Invalid data received from Arduino")
+                        print(f"Invalid FSR number: {fsr_number}")
+                except ValueError:
+                    print("Invalid data received from Arduino")
 
-
+    # def handle_arduino_input(self):
+    #     selected_library = self.masterLibraryComboBox.currentText()
+    #     for arduino in [self.arduino1, self.arduino2]:
+    #         if arduino.in_waiting > 0:
+    #             data = arduino.readline().decode().strip()
+    #             print(f"Received from Arduino: {data}")
+    #             try:
+    #                 fsr_number, velocity, action = map(int, data.split(','))
+    #
+    #                 # Validate FSR number and map it to the corresponding MIDI note
+    #                 if 1 <= fsr_number <= 20:
+    #                     note_index = fsr_number - 1  # FSRs are 1-indexed, so subtract 1 for 0-indexed list
+    #
+    #                     if note_index < len(self.midi_values):
+    #                         note = self.midi_values[note_index]
+    #
+    #                         # Check if the corresponding checkbox is checked (enabled)
+    #                         if self.checkboxes[note_index].isChecked() and selected_library == "Piano":
+    #                             if action == 1:  # Start note
+    #                                 self.note_playback.start_piano_note_playback(note, velocity)
+    #                             elif action == 0:  # Stop note
+    #                                 self.note_playback.stop_piano_note_playback(note)
+    #                         elif self.checkboxes[note_index].isChecked() and selected_library == "Trumpet":
+    #                             if action == 1:  # Start note
+    #                                 self.note_playback.start_trumpet_note_playback(note, velocity)
+    #                             elif action == 0:  # Stop note
+    #                                 self.note_playback.stop_trumpet_note_playback(note)
+    #                         elif self.checkboxes[note_index].isChecked() and selected_library == "Custom":
+    #                             if action == 1:  # Start note
+    #                                 self.note_playback.start_trumpet_note_playback(note, velocity)
+    #                             elif action == 0:  # Stop note
+    #                                 self.note_playback.stop_trumpet_note_playback(note)
+    #                         else:
+    #                             print(f"Note {note} is disabled and will not produce sound.")
+    #                             # self.textBrowser.append(f"Note {note} is disabled and will not produce sound.")
+    #
+    #                     else:
+    #                         print(f"FSR number {fsr_number} is out of range for the current MIDI values.")
+    #                 else:
+    #                     print(f"Invalid FSR number: {fsr_number}")
+    #             except ValueError:
+    #                 print("Invalid data received from Arduino")
 
     def setup_checkboxes(self):
-        for checkbox in self.checkboxes:
-            checkbox.setChecked(True)  # Checked means enabled
-            checkbox.stateChanged.connect(self.toggle_enable_disable)
+        # Connect master tab checkboxes to toggle behavior
+        for master_checkbox in self.master_to_piano.keys():
+            master_checkbox.setChecked(False)  # Unchecked by default
+            master_checkbox.stateChanged.connect(self.sync_with_tabs)
+        for master_checkbox in self.master_to_trumpet.keys():
+            master_checkbox.setChecked(False)
+            master_checkbox.stateChanged.connect(self.sync_with_tabs)
+        for master_checkbox in self.master_to_upload.keys():
+            master_checkbox.setChecked(False)
+            master_checkbox.stateChanged.connect(self.sync_with_tabs)
+
+    @Slot()
+    def sync_with_tabs(self):
+        selected_library = self.masterLibraryComboBox.currentText()
+
+        # Ensure mutual exclusivity between tabs
+        for master_checkbox, piano_checkbox in self.master_to_piano.items():
+            if piano_checkbox.isChecked():
+                # Uncheck corresponding trumpet/upload checkboxes
+                self.master_to_trumpet[master_checkbox].setChecked(False)
+                self.master_to_upload[master_checkbox].setChecked(False)
+        for master_checkbox, trumpet_checkbox in self.master_to_trumpet.items():
+            if trumpet_checkbox.isChecked():
+                # Uncheck corresponding piano/upload checkboxes
+                self.master_to_piano[master_checkbox].setChecked(False)
+                self.master_to_upload[master_checkbox].setChecked(False)
+        for master_checkbox, upload_checkbox in self.master_to_upload.items():
+            if upload_checkbox.isChecked():
+                # Uncheck corresponding piano/trumpet checkboxes
+                self.master_to_piano[master_checkbox].setChecked(False)
+                self.master_to_trumpet[master_checkbox].setChecked(False)
+
+        # Enable or disable checkboxes based on the selected library
+        for master_checkbox, piano_checkbox in self.master_to_piano.items():
+            piano_checkbox.setEnabled(selected_library == "Custom" and master_checkbox.isChecked())
+        for master_checkbox, trumpet_checkbox in self.master_to_trumpet.items():
+            trumpet_checkbox.setEnabled(selected_library == "Custom" and master_checkbox.isChecked())
+        for master_checkbox, upload_checkbox in self.master_to_upload.items():
+            upload_checkbox.setEnabled(selected_library == "Custom" and master_checkbox.isChecked())
+
+    # def sync_with_tabs(self):
+    #     selected_library = self.masterLibraryComboBox.currentText()
+    #
+    #     # Enable/Disable checkboxes based on the selected library and master checkbox state
+    #     for master_checkbox, piano_checkbox in self.master_to_piano.items():
+    #         piano_checkbox.setEnabled(selected_library == "Custom" and master_checkbox.isChecked())
+    #     for master_checkbox, trumpet_checkbox in self.master_to_trumpet.items():
+    #         trumpet_checkbox.setEnabled(selected_library == "Custom" and master_checkbox.isChecked())
+    #     for master_checkbox, upload_checkbox in self.master_to_upload.items():
+    #         upload_checkbox.setEnabled(selected_library == "Custom" and master_checkbox.isChecked())
 
     @Slot()
     def toggle_enable_disable(self):
@@ -109,16 +359,23 @@ class DuoStepApp(QMainWindow, Ui_MainWindow):
                 print(f"{checkbox.objectName()} disabled")
                 note_to_stop = self.midi_values[index] if index < len(self.midi_values) else None
                 if note_to_stop is not None:
-                    self.note_playback.stop_note_playback(note_to_stop)  # Use the NotePlayback instance
+                    self.note_playback.stop_piano_note_playback(note_to_stop)  # Use the NotePlayback instance
+                    self.note_playback.stop_trumpet_note_playback(note_to_stop)
 
-    def enable_all_checkboxes(self):
-        # Enable all checkboxes in the Piano and Clarinet tabs
-        for checkbox in self.get_all_checkboxes():
+    def enable_all_tab_buttons(self):
+        for checkbox in self.master_to_piano.values():
+            checkbox.setEnabled(True)
+        for checkbox in self.master_to_trumpet.values():
+            checkbox.setEnabled(True)
+        for checkbox in self.master_to_upload.values():
             checkbox.setEnabled(True)
 
-    def disable_all_checkboxes(self):
-        # Disable (gray out) all checkboxes in the Piano and Clarinet tabs
-        for checkbox in self.get_all_checkboxes():
+    def disable_all_tab_buttons(self):
+        for checkbox in self.master_to_piano.values():
+            checkbox.setEnabled(False)
+        for checkbox in self.master_to_trumpet.values():
+            checkbox.setEnabled(False)
+        for checkbox in self.master_to_upload.values():
             checkbox.setEnabled(False)
 
     def update_note_range(self):
@@ -128,8 +385,14 @@ class DuoStepApp(QMainWindow, Ui_MainWindow):
 
         if selected_library == "Piano":
             self.filter_note_octave_range(21, 108, "Piano")  # Piano range: A0 (21) to C8 (108)
-        elif selected_library == "Clarinet":
-            self.filter_note_octave_range(50, 94, "Clarinet")  # Clarinet range: D3 (50) to Bb6 (94)
+            self.disable_all_tab_buttons()
+        elif selected_library == "Trumpet":
+            self.filter_note_octave_range(56, 84, "Trumpet")  # Trumpet range: G#3 (?) to C6 (?)
+            self.disable_all_tab_buttons()
+        elif selected_library == "Custom":
+            #self.populate_note_octave_options()  # Custom option shows all notes and octaves
+            self.filter_note_octave_range(21, 108, "Custom")  # Piano range: A0 (21) to C8 (108)
+            self.enable_all_tab_buttons()
         else:
             self.populate_note_octave_options()  # Custom option shows all notes and octaves
 
@@ -208,12 +471,12 @@ class DuoStepApp(QMainWindow, Ui_MainWindow):
             if selected_library == "Piano":
                 lower_midi_limit = 21  # A0
                 upper_midi_limit = 108  # C8
-            elif selected_library == "Clarinet":
-                lower_midi_limit = 50  # D3
-                upper_midi_limit = 94  # Bb6
+            elif selected_library == "Trumpet":
+                lower_midi_limit = 56  # G#3
+                upper_midi_limit = 84  # C6
             else:
-                lower_midi_limit = 0  # General MIDI lower limit
-                upper_midi_limit = 127  # General MIDI upper limit
+                lower_midi_limit = 21  # General MIDI lower limit
+                upper_midi_limit = 108  # General MIDI upper limit
 
             # highest and lowest valid starting MIDI notes for a 20-note range
             highest_valid_start_midi = upper_midi_limit - 19
@@ -278,9 +541,9 @@ class DuoStepApp(QMainWindow, Ui_MainWindow):
         print(f"Piano volume set to: {value}")
 
     @Slot()
-    def update_clarinet_volume(self, value):
+    def update_trumpet_volume(self, value):
         self.label_21.setText(str(value))
-        print(f"Clarinet volume set to: {value}")
+        print(f"Trumpet volume set to: {value}")
 
     @Slot()
     def start_recording(self):
@@ -293,7 +556,8 @@ class DuoStepApp(QMainWindow, Ui_MainWindow):
     def closeEvent(self, event):
         self.server.stop()
         self.server.shutdown()
-        self.arduino.close()
+        self.arduino1.close()
+        self.arduino2.close()
         event.accept()
 
 if __name__ == "__main__":

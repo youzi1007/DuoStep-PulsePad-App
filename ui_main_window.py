@@ -18,8 +18,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QGridLayout,
     QHBoxLayout, QLabel, QMainWindow, QMenu,
-    QMenuBar, QPushButton, QSizePolicy, QSlider,
-    QStatusBar, QTabWidget, QTextBrowser, QWidget)
+    QMenuBar, QPushButton, QScrollArea, QSizePolicy,
+    QSlider, QStatusBar, QTabWidget, QTextBrowser,
+    QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -27,6 +28,11 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.setEnabled(True)
         MainWindow.resize(887, 618)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
         MainWindow.setMouseTracking(False)
         icon = QIcon()
@@ -34,7 +40,7 @@ class Ui_MainWindow(object):
         if QIcon.hasThemeIcon(iconThemeName):
             icon = QIcon.fromTheme(iconThemeName)
         else:
-            icon.addFile(u".", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+            icon.addFile(u"C:/Users/hefan-zhang/.designer/backup", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
 
         MainWindow.setWindowIcon(icon)
         MainWindow.setAutoFillBackground(True)
@@ -551,6 +557,342 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.addWidget(self.startingOct_3)
 
         self.Tabs.addTab(self.tab_3, "")
+        self.tab = QWidget()
+        self.tab.setObjectName(u"tab")
+        self.scrollArea = QScrollArea(self.tab)
+        self.scrollArea.setObjectName(u"scrollArea")
+        self.scrollArea.setGeometry(QRect(0, 0, 851, 201))
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.scrollArea.sizePolicy().hasHeightForWidth())
+        self.scrollArea.setSizePolicy(sizePolicy1)
+        self.scrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollAreaWidgetContents = QWidget()
+        self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 832, 336))
+        self.verticalLayout = QVBoxLayout(self.scrollAreaWidgetContents)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.gridLayout_10 = QGridLayout()
+        self.gridLayout_10.setObjectName(u"gridLayout_10")
+        self.uploadButtonL_8 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonL_8.setObjectName(u"uploadButtonL_8")
+
+        self.gridLayout_10.addWidget(self.uploadButtonL_8, 8, 1, 1, 1)
+
+        self.uploadButtonR_5 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonR_5.setObjectName(u"uploadButtonR_5")
+
+        self.gridLayout_10.addWidget(self.uploadButtonR_5, 5, 5, 1, 1)
+
+        self.uploadButtonR_4 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonR_4.setObjectName(u"uploadButtonR_4")
+
+        self.gridLayout_10.addWidget(self.uploadButtonR_4, 4, 5, 1, 1)
+
+        self.L3d_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.L3d_5.setObjectName(u"L3d_5")
+
+        self.gridLayout_10.addWidget(self.L3d_5, 6, 0, 1, 1)
+
+        self.L5d_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.L5d_5.setObjectName(u"L5d_5")
+
+        self.gridLayout_10.addWidget(self.L5d_5, 2, 0, 1, 1)
+
+        self.uploadButtonL_7 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonL_7.setObjectName(u"uploadButtonL_7")
+
+        self.gridLayout_10.addWidget(self.uploadButtonL_7, 7, 1, 1, 1)
+
+        self.R1u_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.R1u_5.setObjectName(u"R1u_5")
+        self.R1u_5.setEnabled(True)
+        self.R1u_5.setTristate(False)
+
+        self.gridLayout_10.addWidget(self.R1u_5, 1, 4, 1, 1)
+
+        self.R1d_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.R1d_5.setObjectName(u"R1d_5")
+
+        self.gridLayout_10.addWidget(self.R1d_5, 2, 4, 1, 1)
+
+        self.R4u_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.R4u_5.setObjectName(u"R4u_5")
+
+        self.gridLayout_10.addWidget(self.R4u_5, 7, 4, 1, 1)
+
+        self.uploadButtonR_2 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonR_2.setObjectName(u"uploadButtonR_2")
+
+        self.gridLayout_10.addWidget(self.uploadButtonR_2, 2, 5, 1, 1)
+
+        self.uploadButtonR_6 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonR_6.setObjectName(u"uploadButtonR_6")
+
+        self.gridLayout_10.addWidget(self.uploadButtonR_6, 6, 5, 1, 1)
+
+        self.R4d_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.R4d_5.setObjectName(u"R4d_5")
+
+        self.gridLayout_10.addWidget(self.R4d_5, 8, 4, 1, 1)
+
+        self.uploadButtonL_9 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonL_9.setObjectName(u"uploadButtonL_9")
+
+        self.gridLayout_10.addWidget(self.uploadButtonL_9, 9, 1, 1, 1)
+
+        self.L2u_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.L2u_5.setObjectName(u"L2u_5")
+
+        self.gridLayout_10.addWidget(self.L2u_5, 7, 0, 1, 1)
+
+        self.L4d_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.L4d_5.setObjectName(u"L4d_5")
+
+        self.gridLayout_10.addWidget(self.L4d_5, 4, 0, 1, 1)
+
+        self.R5u_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.R5u_5.setObjectName(u"R5u_5")
+
+        self.gridLayout_10.addWidget(self.R5u_5, 9, 4, 1, 1)
+
+        self.uploadButtonL = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonL.setObjectName(u"uploadButtonL")
+
+        self.gridLayout_10.addWidget(self.uploadButtonL, 1, 1, 1, 1)
+
+        self.uploadButtonL_6 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonL_6.setObjectName(u"uploadButtonL_6")
+
+        self.gridLayout_10.addWidget(self.uploadButtonL_6, 6, 1, 1, 1)
+
+        self.uploadButtonL_10 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonL_10.setObjectName(u"uploadButtonL_10")
+
+        self.gridLayout_10.addWidget(self.uploadButtonL_10, 10, 1, 1, 1)
+
+        self.uploadButtonR_1 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonR_1.setObjectName(u"uploadButtonR_1")
+
+        self.gridLayout_10.addWidget(self.uploadButtonR_1, 1, 5, 1, 1)
+
+        self.uploadButtonR_9 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonR_9.setObjectName(u"uploadButtonR_9")
+
+        self.gridLayout_10.addWidget(self.uploadButtonR_9, 9, 5, 1, 1)
+
+        self.R2u_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.R2u_5.setObjectName(u"R2u_5")
+
+        self.gridLayout_10.addWidget(self.R2u_5, 3, 4, 1, 1)
+
+        self.label_11 = QLabel(self.scrollAreaWidgetContents)
+        self.label_11.setObjectName(u"label_11")
+
+        self.gridLayout_10.addWidget(self.label_11, 0, 0, 1, 4)
+
+        self.uploadButtonL_5 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonL_5.setObjectName(u"uploadButtonL_5")
+
+        self.gridLayout_10.addWidget(self.uploadButtonL_5, 5, 1, 1, 1)
+
+        self.R2d_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.R2d_5.setObjectName(u"R2d_5")
+
+        self.gridLayout_10.addWidget(self.R2d_5, 4, 4, 1, 1)
+
+        self.uploadButtonL_2 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonL_2.setObjectName(u"uploadButtonL_2")
+
+        self.gridLayout_10.addWidget(self.uploadButtonL_2, 2, 1, 1, 1)
+
+        self.R3d_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.R3d_5.setObjectName(u"R3d_5")
+
+        self.gridLayout_10.addWidget(self.R3d_5, 6, 4, 1, 1)
+
+        self.L4u_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.L4u_5.setObjectName(u"L4u_5")
+
+        self.gridLayout_10.addWidget(self.L4u_5, 3, 0, 1, 1)
+
+        self.L3u_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.L3u_5.setObjectName(u"L3u_5")
+
+        self.gridLayout_10.addWidget(self.L3u_5, 5, 0, 1, 1)
+
+        self.L1u_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.L1u_5.setObjectName(u"L1u_5")
+
+        self.gridLayout_10.addWidget(self.L1u_5, 9, 0, 1, 1)
+
+        self.uploadButtonR_7 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonR_7.setObjectName(u"uploadButtonR_7")
+
+        self.gridLayout_10.addWidget(self.uploadButtonR_7, 7, 5, 1, 1)
+
+        self.L2d_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.L2d_5.setObjectName(u"L2d_5")
+
+        self.gridLayout_10.addWidget(self.L2d_5, 8, 0, 1, 1)
+
+        self.R5d_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.R5d_5.setObjectName(u"R5d_5")
+
+        self.gridLayout_10.addWidget(self.R5d_5, 10, 4, 1, 1)
+
+        self.L1d_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.L1d_5.setObjectName(u"L1d_5")
+
+        self.gridLayout_10.addWidget(self.L1d_5, 10, 0, 1, 1)
+
+        self.uploadButtonL_3 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonL_3.setObjectName(u"uploadButtonL_3")
+
+        self.gridLayout_10.addWidget(self.uploadButtonL_3, 3, 1, 1, 1)
+
+        self.R3u_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.R3u_5.setObjectName(u"R3u_5")
+
+        self.gridLayout_10.addWidget(self.R3u_5, 5, 4, 1, 1)
+
+        self.uploadButtonL_4 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonL_4.setObjectName(u"uploadButtonL_4")
+
+        self.gridLayout_10.addWidget(self.uploadButtonL_4, 4, 1, 1, 1)
+
+        self.uploadButtonR_10 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonR_10.setObjectName(u"uploadButtonR_10")
+
+        self.gridLayout_10.addWidget(self.uploadButtonR_10, 10, 5, 1, 1)
+
+        self.uploadButtonR_3 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonR_3.setObjectName(u"uploadButtonR_3")
+
+        self.gridLayout_10.addWidget(self.uploadButtonR_3, 3, 5, 1, 1)
+
+        self.uploadButtonR_8 = QPushButton(self.scrollAreaWidgetContents)
+        self.uploadButtonR_8.setObjectName(u"uploadButtonR_8")
+
+        self.gridLayout_10.addWidget(self.uploadButtonR_8, 8, 5, 1, 1)
+
+        self.L5u_5 = QCheckBox(self.scrollAreaWidgetContents)
+        self.L5u_5.setObjectName(u"L5u_5")
+
+        self.gridLayout_10.addWidget(self.L5u_5, 1, 0, 1, 1)
+
+        self.upload_label_R_2 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_R_2.setObjectName(u"upload_label_R_2")
+
+        self.gridLayout_10.addWidget(self.upload_label_R_2, 2, 6, 1, 2)
+
+        self.upload_label_R_1 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_R_1.setObjectName(u"upload_label_R_1")
+
+        self.gridLayout_10.addWidget(self.upload_label_R_1, 1, 6, 1, 2)
+
+        self.upload_label_R_3 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_R_3.setObjectName(u"upload_label_R_3")
+
+        self.gridLayout_10.addWidget(self.upload_label_R_3, 3, 6, 1, 2)
+
+        self.upload_label_R_4 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_R_4.setObjectName(u"upload_label_R_4")
+
+        self.gridLayout_10.addWidget(self.upload_label_R_4, 4, 6, 1, 2)
+
+        self.upload_label_R_5 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_R_5.setObjectName(u"upload_label_R_5")
+
+        self.gridLayout_10.addWidget(self.upload_label_R_5, 5, 6, 1, 2)
+
+        self.upload_label_R_6 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_R_6.setObjectName(u"upload_label_R_6")
+
+        self.gridLayout_10.addWidget(self.upload_label_R_6, 6, 6, 1, 2)
+
+        self.upload_label_R_7 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_R_7.setObjectName(u"upload_label_R_7")
+
+        self.gridLayout_10.addWidget(self.upload_label_R_7, 7, 6, 1, 2)
+
+        self.upload_label_R_8 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_R_8.setObjectName(u"upload_label_R_8")
+
+        self.gridLayout_10.addWidget(self.upload_label_R_8, 8, 6, 1, 2)
+
+        self.upload_label_R_9 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_R_9.setObjectName(u"upload_label_R_9")
+
+        self.gridLayout_10.addWidget(self.upload_label_R_9, 9, 6, 1, 2)
+
+        self.upload_label_R_10 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_R_10.setObjectName(u"upload_label_R_10")
+
+        self.gridLayout_10.addWidget(self.upload_label_R_10, 10, 6, 1, 2)
+
+        self.upload_label_L_1 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_L_1.setObjectName(u"upload_label_L_1")
+
+        self.gridLayout_10.addWidget(self.upload_label_L_1, 1, 2, 1, 2)
+
+        self.upload_label_L_2 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_L_2.setObjectName(u"upload_label_L_2")
+
+        self.gridLayout_10.addWidget(self.upload_label_L_2, 2, 2, 1, 2)
+
+        self.upload_label_L_3 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_L_3.setObjectName(u"upload_label_L_3")
+
+        self.gridLayout_10.addWidget(self.upload_label_L_3, 3, 2, 1, 2)
+
+        self.upload_label_L_4 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_L_4.setObjectName(u"upload_label_L_4")
+
+        self.gridLayout_10.addWidget(self.upload_label_L_4, 4, 2, 1, 2)
+
+        self.upload_label_L_5 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_L_5.setObjectName(u"upload_label_L_5")
+
+        self.gridLayout_10.addWidget(self.upload_label_L_5, 5, 2, 1, 2)
+
+        self.upload_label_L_6 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_L_6.setObjectName(u"upload_label_L_6")
+
+        self.gridLayout_10.addWidget(self.upload_label_L_6, 6, 2, 1, 2)
+
+        self.upload_label_L_7 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_L_7.setObjectName(u"upload_label_L_7")
+
+        self.gridLayout_10.addWidget(self.upload_label_L_7, 7, 2, 1, 2)
+
+        self.upload_label_L_8 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_L_8.setObjectName(u"upload_label_L_8")
+
+        self.gridLayout_10.addWidget(self.upload_label_L_8, 8, 2, 1, 2)
+
+        self.upload_label_L_9 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_L_9.setObjectName(u"upload_label_L_9")
+
+        self.gridLayout_10.addWidget(self.upload_label_L_9, 9, 2, 1, 2)
+
+        self.upload_label_L_10 = QLabel(self.scrollAreaWidgetContents)
+        self.upload_label_L_10.setObjectName(u"upload_label_L_10")
+
+        self.gridLayout_10.addWidget(self.upload_label_L_10, 10, 2, 1, 2)
+
+        self.label_10 = QLabel(self.scrollAreaWidgetContents)
+        self.label_10.setObjectName(u"label_10")
+
+        self.gridLayout_10.addWidget(self.label_10, 0, 4, 1, 4)
+
+
+        self.verticalLayout.addLayout(self.gridLayout_10)
+
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.Tabs.addTab(self.tab, "")
         self.masterVol = QSlider(self.centralwidget)
         self.masterVol.setObjectName(u"masterVol")
         self.masterVol.setGeometry(QRect(200, 270, 160, 16))
@@ -577,9 +919,9 @@ class Ui_MainWindow(object):
         self.label_PianoVol = QLabel(self.centralwidget)
         self.label_PianoVol.setObjectName(u"label_PianoVol")
         self.label_PianoVol.setGeometry(QRect(60, 310, 111, 16))
-        self.label_ClarinetVol = QLabel(self.centralwidget)
-        self.label_ClarinetVol.setObjectName(u"label_ClarinetVol")
-        self.label_ClarinetVol.setGeometry(QRect(60, 350, 131, 16))
+        self.label_TrumpetVol = QLabel(self.centralwidget)
+        self.label_TrumpetVol.setObjectName(u"label_TrumpetVol")
+        self.label_TrumpetVol.setGeometry(QRect(60, 350, 131, 16))
         self.label_19 = QLabel(self.centralwidget)
         self.label_19.setObjectName(u"label_19")
         self.label_19.setGeometry(QRect(370, 270, 31, 16))
@@ -599,6 +941,9 @@ class Ui_MainWindow(object):
         self.textBrowser.setObjectName(u"textBrowser")
         self.textBrowser.setGeometry(QRect(430, 270, 411, 191))
         MainWindow.setCentralWidget(self.centralwidget)
+        self.statusbar = QStatusBar(MainWindow)
+        self.statusbar.setObjectName(u"statusbar")
+        MainWindow.setStatusBar(self.statusbar)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 887, 22))
@@ -606,9 +951,6 @@ class Ui_MainWindow(object):
         self.menumain = QMenu(self.menubar)
         self.menumain.setObjectName(u"menumain")
         MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QStatusBar(MainWindow)
-        self.statusbar.setObjectName(u"statusbar")
-        MainWindow.setStatusBar(self.statusbar)
 
         self.menubar.addAction(self.menumain.menuAction())
         self.menumain.addSeparator()
@@ -637,7 +979,7 @@ class Ui_MainWindow(object):
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Left Hand", None))
         self.label_selectSdLib.setText(QCoreApplication.translate("MainWindow", u"Select Sound Library", None))
         self.masterLibraryComboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"Piano", None))
-        self.masterLibraryComboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"Clarinet", None))
+        self.masterLibraryComboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"Trumpet", None))
         self.masterLibraryComboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"Custom", None))
 
         self.R4u.setText(QCoreApplication.translate("MainWindow", u"R4_u", None))
@@ -739,7 +1081,7 @@ class Ui_MainWindow(object):
         self.R2d_3.setText(QCoreApplication.translate("MainWindow", u"R2_d", None))
         self.R4d_3.setText(QCoreApplication.translate("MainWindow", u"R4_d", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"Right Hand", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Select Button for Clarinet", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Select Button for Trumpet", None))
         self.startingNote_3.setItemText(0, QCoreApplication.translate("MainWindow", u"A", None))
         self.startingNote_3.setItemText(1, QCoreApplication.translate("MainWindow", u"B", None))
         self.startingNote_3.setItemText(2, QCoreApplication.translate("MainWindow", u"C", None))
@@ -758,10 +1100,73 @@ class Ui_MainWindow(object):
         self.startingOct_3.setItemText(7, QCoreApplication.translate("MainWindow", u"7", None))
         self.startingOct_3.setItemText(8, QCoreApplication.translate("MainWindow", u"8", None))
 
-        self.Tabs.setTabText(self.Tabs.indexOf(self.tab_3), QCoreApplication.translate("MainWindow", u"Clarinet", None))
+        self.Tabs.setTabText(self.Tabs.indexOf(self.tab_3), QCoreApplication.translate("MainWindow", u"Trumpet", None))
+        self.uploadButtonL_8.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.uploadButtonR_5.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.uploadButtonR_4.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.L3d_5.setText(QCoreApplication.translate("MainWindow", u"L3_d", None))
+        self.L5d_5.setText(QCoreApplication.translate("MainWindow", u"L5_d", None))
+        self.uploadButtonL_7.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.R1u_5.setText(QCoreApplication.translate("MainWindow", u"R1_u", None))
+        self.R1d_5.setText(QCoreApplication.translate("MainWindow", u"R2_d", None))
+        self.R4u_5.setText(QCoreApplication.translate("MainWindow", u"R4_u", None))
+        self.uploadButtonR_2.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.uploadButtonR_6.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.R4d_5.setText(QCoreApplication.translate("MainWindow", u"R4_d", None))
+        self.uploadButtonL_9.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.L2u_5.setText(QCoreApplication.translate("MainWindow", u"L2_u", None))
+        self.L4d_5.setText(QCoreApplication.translate("MainWindow", u"L4_d", None))
+        self.R5u_5.setText(QCoreApplication.translate("MainWindow", u"R5_u", None))
+        self.uploadButtonL.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.uploadButtonL_6.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.uploadButtonL_10.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.uploadButtonR_1.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.uploadButtonR_9.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.R2u_5.setText(QCoreApplication.translate("MainWindow", u"R2_u", None))
+        self.label_11.setText(QCoreApplication.translate("MainWindow", u"Left Hand", None))
+        self.uploadButtonL_5.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.R2d_5.setText(QCoreApplication.translate("MainWindow", u"R2_d", None))
+        self.uploadButtonL_2.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.R3d_5.setText(QCoreApplication.translate("MainWindow", u"R3_d", None))
+        self.L4u_5.setText(QCoreApplication.translate("MainWindow", u"L4_u", None))
+        self.L3u_5.setText(QCoreApplication.translate("MainWindow", u"L3_u", None))
+        self.L1u_5.setText(QCoreApplication.translate("MainWindow", u"L1_u", None))
+        self.uploadButtonR_7.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.L2d_5.setText(QCoreApplication.translate("MainWindow", u"L2_d", None))
+        self.R5d_5.setText(QCoreApplication.translate("MainWindow", u"R5_d", None))
+        self.L1d_5.setText(QCoreApplication.translate("MainWindow", u"L1_d", None))
+        self.uploadButtonL_3.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.R3u_5.setText(QCoreApplication.translate("MainWindow", u"R3_u", None))
+        self.uploadButtonL_4.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.uploadButtonR_10.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.uploadButtonR_3.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.uploadButtonR_8.setText(QCoreApplication.translate("MainWindow", u"upload", None))
+        self.L5u_5.setText(QCoreApplication.translate("MainWindow", u"L5_u", None))
+        self.upload_label_R_2.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_R_1.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_R_3.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_R_4.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_R_5.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_R_6.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_R_7.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_R_8.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_R_9.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_R_10.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_L_1.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_L_2.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_L_3.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_L_4.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_L_5.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_L_6.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_L_7.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_L_8.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_L_9.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.upload_label_L_10.setText(QCoreApplication.translate("MainWindow", u"No File Uploaded", None))
+        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Right Hand", None))
+        self.Tabs.setTabText(self.Tabs.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Upload", None))
         self.label_MasterVol.setText(QCoreApplication.translate("MainWindow", u"Master Volume", None))
         self.label_PianoVol.setText(QCoreApplication.translate("MainWindow", u"Piano Volume", None))
-        self.label_ClarinetVol.setText(QCoreApplication.translate("MainWindow", u"Clarinet Volume", None))
+        self.label_TrumpetVol.setText(QCoreApplication.translate("MainWindow", u"Trumpet Volume", None))
         self.label_19.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.label_20.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.label_21.setText(QCoreApplication.translate("MainWindow", u"0", None))
