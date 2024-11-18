@@ -32,7 +32,7 @@ DuoStep: PulsePad is a user-friendly, Arduino-integrated musical app that’s al
        - Windows: Run these installation code through Conda Command Prompt
        - MacOS/Linux: Run in terminal
      ```bash
-     conda create -n myenv python=3.10
+     conda create -n DuoStepEnv python=3.10
      conda activate DuoStepEnv
      ```
      - If need to deactivate the env
