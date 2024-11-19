@@ -28,8 +28,9 @@ class DuoStepApp(QMainWindow, Ui_MainWindow):
         self.stopButton.clicked.connect(self.stop_recording)
 
         # Arduino
-        self.arduino1 = serial.Serial('COM4', 9600)
-        self.arduino2 = serial.Serial('COM5', 9600)
+        self.arduino1 = serial.Serial('COM5', 9600)
+        self.arduino2 = serial.Serial('COM6', 9600)
+        self.arduino3 = serial.Serial('COM7', 9600)
         time.sleep(2)  # Wait for Arduino to initialize
 
         # Set up directories for samples
@@ -184,7 +185,7 @@ class DuoStepApp(QMainWindow, Ui_MainWindow):
 
     def handle_arduino_input(self):
         selected_library = self.masterLibraryComboBox.currentText()
-        for arduino in [self.arduino1, self.arduino2]:
+        for arduino in [self.arduino1, self.arduino2, self.arduino3]:
             if arduino.in_waiting > 0:
                 data = arduino.readline().decode().strip()
                 print(f"Received from Arduino: {data}")
@@ -558,6 +559,7 @@ class DuoStepApp(QMainWindow, Ui_MainWindow):
         self.server.shutdown()
         self.arduino1.close()
         self.arduino2.close()
+        self.arduino3.close()
         event.accept()
 
 if __name__ == "__main__":
